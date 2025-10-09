@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: job-matcher-app
+    ports:
+      - "8501:8501"
+    environment:
+      # LLM API Keys (choose your provider)
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+
+      # Job Platform API Keys
+      - ADZUNA_APP_ID=${ADZUNA_APP_ID}
+      - ADZUNA_API_KEY=${ADZUNA_API_KEY}
+
+      # Application Settings
+      - EMBEDDING_MODEL=${EMBEDDING_MODEL:-text-embedding-3-small}
+      - LLM_MODEL=${LLM_MODEL:-gpt-3.5-turbo}
+      - VECTOR_STORE_TYPE=${VECTOR_STORE_TYPE:-faiss}
+
+      # Redis connection (if using caching service)
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+
+      # Application Mode
+      - ENV=${ENV:-development}
+    volumes:
+      - ./app:/app/app
+      - ./data:/app/data
+      - ./logs:/app/logs
+    depends_on:
+      - redis
+    restart: unless-stopped
+    networks:
+      - job-matcher-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: job-matcher-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+    restart: unless-stopped
+    networks:
+      - job-matcher-network
+
+volumes:
+  redis-data:
+
+networks:
+  job-matcher-network:
+    driver: bridge

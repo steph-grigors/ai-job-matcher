@@ -1,0 +1,56 @@
+# Core Framework
+streamlit==1.31.0
+
+# LangChain Ecosystem
+langchain==0.1.9
+langchain-community==0.0.24
+langchain-openai==0.0.6
+langchain-anthropic==0.1.1
+
+# LLM Providers (choose based on your preference)
+openai==1.12.0
+
+# Vector Store & Embeddings
+faiss-cpu==1.7.4
+chromadb==0.4.22
+
+# PDF Processing
+pypdf2==3.0.1
+pdfplumber==0.10.3
+pymupdf==1.23.21
+
+# Data Validation & Models
+pydantic==2.6.1
+pydantic-settings==2.1.0
+
+# HTTP & API
+requests==2.31.0
+httpx==0.26.0
+
+# Data Processing
+pandas==2.2.0
+numpy==1.26.3
+
+# Caching (Optional but recommended)
+redis==5.0.1
+diskcache==5.6.3
+
+# Environment Management
+python-dotenv==1.0.1
+
+# Utilities
+python-multipart==0.0.9
+beautifulsoup4==4.12.3
+lxml==5.1.0
+
+# Logging & Monitoring
+loguru==0.7.2
+
+# Testing (for development)
+pytest==8.0.0
+pytest-asyncio==0.23.4
+pytest-cov==4.1.0
+
+# Type Checking (optional, for development)
+mypy==1.8.0
+types-requests==2.31.0.20240125
