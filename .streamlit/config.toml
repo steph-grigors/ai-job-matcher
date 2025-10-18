@@ -1,0 +1,42 @@
+[theme]
+# Primary accent color for interactive elements
+primaryColor = "#1f77b4"
+
+# Background color for the main content area
+backgroundColor = "#FFFFFF"
+
+# Background color used for the sidebar and most interactive widgets
+secondaryBackgroundColor = "#f0f2f6"
+
+# Color used for almost all text
+textColor = "#262730"
+
+# Font family for all text in the app, except code blocks
+font = "sans serif"
+
+[server]
+# Port where the app runs (Streamlit Cloud handles this)
+port = 8501
+
+# Disable CORS (Streamlit Cloud handles this)
+enableCORS = false
+
+# Enable XSRF protection
+enableXsrfProtection = true
+
+# Max upload size in MB
+maxUploadSize = 10
+
+[browser]
+# Disable usage stats collection in production
+gatherUsageStats = false
+
+# Server address (0.0.0.0 for cloud deployment)
+serverAddress = "0.0.0.0"
+
+[runner]
+# Automatically rerun script when the source file is modified
+magicEnabled = true
+
+# Allow reruns with the "r" keyboard shortcut
+fastReruns = true

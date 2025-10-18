@@ -1,0 +1,14 @@
+# System-level packages required for the application
+# Streamlit Cloud will install these using apt-get
+
+# Required for PDF processing
+# (pypdf uses these for certain PDF features)
+
+# Build tools (needed for some Python packages)
+build-essential
+
+# Git (for version control in cloud environment)
+git
+
+# No additional system packages needed for this project
+# All Python dependencies are in requirements.txt

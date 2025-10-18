@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   app:
     build:
@@ -11,7 +9,6 @@ services:
     environment:
       # LLM API Keys (choose your provider)
       - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
 
       # Job Platform API Keys
       - ADZUNA_APP_ID=${ADZUNA_APP_ID}

@@ -2,6 +2,10 @@
 .env
 .env.local
 .env.production
+.env.*.local
+
+# Streamlit secrets (IMPORTANT for deployment)
+.streamlit/secrets.toml
 
 # Python
 __pycache__/
@@ -77,5 +81,8 @@ secrets/
 Thumbs.db
 .DS_Store
 
-# Streamlit
-.streamlit/secrets.toml
+# Match results (user-generated)
+match_results_*.json
+
+# Uploaded resumes (temporary)
+data/resumes/*.pdf
