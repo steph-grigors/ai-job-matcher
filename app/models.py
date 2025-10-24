@@ -12,12 +12,11 @@ from enum import Enum
 # Custom Type for Handling None Lists
 # ===================================
 
-def none_to_list(v):
+def convert_none_to_list(v):
     """Convert None to empty list for LLM responses"""
-    return v if v is not None else []
-
-# Custom type that accepts None and converts to empty list
-ListOrNone = Annotated[List, BeforeValidator(none_to_list)]
+    if v is None:
+        return []
+    return v
 
 
 # ===================================
@@ -134,7 +133,7 @@ class Resume(BaseModel):
     )
 
     # Core Matching Fields
-    target_job_titles: ListOrNone[str] = Field(
+    target_job_titles: Annotated[List[str], BeforeValidator(convert_none_to_list)] = Field(
         default=[],
         description="Job titles the candidate is seeking"
     )
@@ -166,40 +165,40 @@ class Resume(BaseModel):
     )
 
     # Work History
-    work_experience: ListOrNone[WorkExperience] = Field(
+    work_experience: Annotated[List[WorkExperience], BeforeValidator(convert_none_to_list)] = Field(
         default=[],
         description="List of previous work experiences"
     )
 
-    past_industries: ListOrNone[str] = Field(
+    past_industries: Annotated[List[str], BeforeValidator(convert_none_to_list)] = Field(
         default=[],
         description="Industries worked in"
     )
 
     # Education
-    education: ListOrNone[Education] = Field(
+    education: Annotated[List[Education], BeforeValidator(convert_none_to_list)] = Field(
         default=[],
         description="Educational background"
     )
 
     # Skills
-    technical_skills: ListOrNone[str] = Field(
+    technical_skills: Annotated[List[str], BeforeValidator(convert_none_to_list)] = Field(
         default=[],
         description="Technical skills and tools"
     )
 
-    soft_skills: ListOrNone[str] = Field(
+    soft_skills: Annotated[List[str], BeforeValidator(convert_none_to_list)] = Field(
         default=[],
         description="Soft skills (leadership, communication, etc.)"
     )
 
-    languages: ListOrNone[str] = Field(
+    languages: Annotated[List[str], BeforeValidator(convert_none_to_list)] = Field(
         default=[],
         description="Spoken languages"
     )
 
     # Certifications
-    certifications: ListOrNone[Certification] = Field(
+    certifications: Annotated[List[Certification], BeforeValidator(convert_none_to_list)] = Field(
         default=[],
         description="Professional certifications"
     )
