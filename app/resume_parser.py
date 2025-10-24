@@ -60,12 +60,14 @@ class ResumeParser:
             - Extract technical skills, soft skills, and languages separately
             - Parse work experience with company, title, duration, and industry
             - Be thorough but accurate - don't hallucinate information
+
+            Return the data in the exact JSON format specified.
             """),
             ("human", "Resume text:\n\n{resume_text}")
         ])
 
-        # Create chain with structured output
-        structured_llm = self.llm.with_structured_output(Resume)
+        # Create chain with structured output using schema parameter
+        structured_llm = self.llm.with_structured_output(schema=Resume)
         chain = prompt | structured_llm
 
         return chain
@@ -128,6 +130,24 @@ class ResumeParser:
         try:
             # Invoke the extraction chain
             resume = self.extraction_chain.invoke({"resume_text": text})
+
+            # Handle None values for list fields (LLM sometimes returns None)
+            if resume.work_experience is None:
+                resume.work_experience = []
+            if resume.past_industries is None:
+                resume.past_industries = []
+            if resume.education is None:
+                resume.education = []
+            if resume.technical_skills is None:
+                resume.technical_skills = []
+            if resume.soft_skills is None:
+                resume.soft_skills = []
+            if resume.languages is None:
+                resume.languages = []
+            if resume.certifications is None:
+                resume.certifications = []
+            if resume.target_job_titles is None:
+                resume.target_job_titles = []
 
             # Add raw text to the resume object
             resume.raw_text = text
