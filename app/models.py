@@ -197,22 +197,6 @@ class Resume(BaseModel):
         description="Full extracted text from PDF"
     )
 
-    # Validator to handle None values from LLM
-    @model_validator(mode='before')
-    @classmethod
-    def handle_none_lists(cls, data):
-        """Convert None to empty list for list fields"""
-        list_fields = [
-            'work_experience', 'past_industries', 'education',
-            'technical_skills', 'soft_skills', 'languages',
-            'certifications', 'target_job_titles'
-        ]
-        if isinstance(data, dict):
-            for field in list_fields:
-                if field in data and data[field] is None:
-                    data[field] = []
-        return data
-
     class Config:
         """Pydantic configuration"""
         use_enum_values = True  # Store enum values as strings
