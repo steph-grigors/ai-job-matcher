@@ -1,10 +1,23 @@
 """
 Pydantic models for structured data representation
 """
-from typing import List, Optional
-from pydantic import BaseModel, Field, HttpUrl
+from typing import List, Optional, Any
+from pydantic import BaseModel, Field, BeforeValidator
+from typing_extensions import Annotated
 from datetime import date
 from enum import Enum
+
+
+# ===================================
+# Custom Type for Handling None Lists
+# ===================================
+
+def none_to_list(v):
+    """Convert None to empty list for LLM responses"""
+    return v if v is not None else []
+
+# Custom type that accepts None and converts to empty list
+ListOrNone = Annotated[List, BeforeValidator(none_to_list)]
 
 
 # ===================================
@@ -121,9 +134,9 @@ class Resume(BaseModel):
     )
 
     # Core Matching Fields
-    target_job_titles: List[str] = Field(
-        description="Job titles the candidate is seeking",
-        min_items=1
+    target_job_titles: ListOrNone[str] = Field(
+        default=[],
+        description="Job titles the candidate is seeking"
     )
 
     current_location: Optional[str] = Field(
@@ -153,41 +166,41 @@ class Resume(BaseModel):
     )
 
     # Work History
-    work_experience: List[WorkExperience] = Field(
-        default_factory=list,
+    work_experience: ListOrNone[WorkExperience] = Field(
+        default=[],
         description="List of previous work experiences"
     )
 
-    past_industries: List[str] = Field(
-        default_factory=list,
+    past_industries: ListOrNone[str] = Field(
+        default=[],
         description="Industries worked in"
     )
 
     # Education
-    education: List[Education] = Field(
-        default_factory=list,
+    education: ListOrNone[Education] = Field(
+        default=[],
         description="Educational background"
     )
 
     # Skills
-    technical_skills: List[str] = Field(
-        default_factory=list,
+    technical_skills: ListOrNone[str] = Field(
+        default=[],
         description="Technical skills and tools"
     )
 
-    soft_skills: List[str] = Field(
-        default_factory=list,
+    soft_skills: ListOrNone[str] = Field(
+        default=[],
         description="Soft skills (leadership, communication, etc.)"
     )
 
-    languages: List[str] = Field(
-        default_factory=list,
+    languages: ListOrNone[str] = Field(
+        default=[],
         description="Spoken languages"
     )
 
     # Certifications
-    certifications: List[Certification] = Field(
-        default_factory=list,
+    certifications: ListOrNone[Certification] = Field(
+        default=[],
         description="Professional certifications"
     )
 
@@ -199,7 +212,7 @@ class Resume(BaseModel):
 
     class Config:
         """Pydantic configuration"""
-        use_enum_values = True  # Store enum values as strings
+        use_enum_values = True
         json_schema_extra = {
             "example": {
                 "name": "John Doe",
