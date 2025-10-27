@@ -15,6 +15,7 @@ from app.job_fetcher import JobFetcher
 from app.matcher import JobMatcher
 from app.config import settings
 from app.country_detector import CountryDetector
+from app.ip_tracker import get_query_status_message, can_use_app, use_demo_query, has_user_api_key, get_client_ip
 
 
 # Page configuration
@@ -101,11 +102,239 @@ if 'detected_country' not in st.session_state:
     st.session_state.detected_country = None
 if 'active_tab' not in st.session_state:
     st.session_state.active_tab = "upload"
+if 'user_openai_key' not in st.session_state:
+    st.session_state.user_openai_key = None
 
 
 def detect_country_from_location():
     """Helper function to detect country from location field"""
     pass  # Detection happens inline in the UI
+
+
+def about_tab():
+    """Tab 4: About the application"""
+
+    # Hero Section (Full Width)
+    st.markdown("""
+    <div style='text-align: center; padding: 2rem 0;'>
+        <h1>🎯 AI Job Matcher</h1>
+        <p style='font-size: 1.2rem; color: #666;'>
+            Find your perfect career match with AI-powered intelligence
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.divider()
+
+    # Two-Column Layout
+    left_col, right_col = st.columns([3, 2], gap="large")
+
+    # ========================================
+    # LEFT COLUMN - Main Content
+    # ========================================
+    with left_col:
+        # What is This?
+        st.subheader("💡 What is This?")
+        st.write("""
+        An intelligent job matching platform that analyzes your resume and automatically
+        ranks job opportunities using advanced AI. Combines semantic search with LLM-based
+        scoring to find roles that truly fit your profile.
+        """)
+
+        st.markdown("---")
+
+        # How It Works (Visual Flow)
+        st.subheader("🔄 How It Works")
+
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.markdown("""
+            <div style='text-align: center;'>
+                <div style='font-size: 2rem;'>📄</div>
+                <div style='font-weight: bold;'>Upload</div>
+                <div style='font-size: 0.8rem; color: #666;'>Your resume</div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col2:
+            st.markdown("""
+            <div style='text-align: center;'>
+                <div style='font-size: 2rem;'>🔍</div>
+                <div style='font-weight: bold;'>Search</div>
+                <div style='font-size: 0.8rem; color: #666;'>Find jobs</div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col3:
+            st.markdown("""
+            <div style='text-align: center;'>
+                <div style='font-size: 2rem;'>🎯</div>
+                <div style='font-weight: bold;'>Match</div>
+                <div style='font-size: 0.8rem; color: #666;'>AI ranks them</div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col4:
+            st.markdown("""
+            <div style='text-align: center;'>
+                <div style='font-size: 2rem;'>🚀</div>
+                <div style='font-weight: bold;'>Apply</div>
+                <div style='font-size: 0.8rem; color: #666;'>Get hired!</div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("---")
+
+        # Key Features (Expandable)
+        st.subheader("✨ Key Features")
+
+        with st.expander("📄 Smart Resume Parsing", expanded=False):
+            st.write("""
+            - AI extracts structured data from any resume format
+            - Identifies skills, experience, education automatically
+            - Handles various layouts and styles
+            """)
+
+        with st.expander("🎯 Two-Stage Matching", expanded=False):
+            st.write("""
+            **Stage 1:** Vector embeddings for fast semantic search (FAISS)
+
+            **Stage 2:** GPT-4o-mini provides detailed scoring & explanations
+
+            Result: Fast + Accurate = Best matches in ~30 seconds
+            """)
+
+        with st.expander("🌍 Global Job Search", expanded=False):
+            st.write("""
+            - 20+ countries supported via Adzuna API
+            - 200+ cities with smart auto-detection
+            - Real-time job listings with salary data
+            """)
+
+        with st.expander("💡 Match Explanations", expanded=False):
+            st.write("""
+            - Percentage scores (0-100%)
+            - Detailed reasoning for each match
+            - Identifies strengths and gaps
+            """)
+
+        st.markdown("---")
+
+        # Cost & Usage
+        st.subheader("💰 Cost & Usage")
+
+        cost_col1, cost_col2 = st.columns(2)
+
+        with cost_col1:
+            st.markdown("""
+            **🆓 Demo Mode**
+            - 1 free resume matching/day
+            - Full feature access
+            - Perfect for testing
+            """)
+
+        with cost_col2:
+            st.markdown("""
+            **🔑 Your API Key**
+            - Unlimited queries
+            - ~$0.02 per search
+            - [Get free key →](https://platform.openai.com/api-keys)
+            """)
+
+    # ========================================
+    # RIGHT COLUMN - Highlights & Quick Info
+    # ========================================
+    with right_col:
+        # Quick Stats
+        st.subheader("📊 Quick Stats")
+
+        metric_col1, metric_col2 = st.columns(2)
+        with metric_col1:
+            st.metric("Countries", "20+", help="Adzuna coverage")
+            st.metric("Match Time", "~30s", help="Average processing time")
+
+        with metric_col2:
+            st.metric("Cities", "200+", help="Auto-detection database")
+            st.metric("Accuracy", "85%+", help="Top match quality")
+
+        st.markdown("---")
+
+        # Technology Stack
+        st.subheader("🛠️ Tech Stack")
+
+        st.markdown("""
+        <div style='display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0;'>
+            <span style='background: #1f77b4; color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.85rem;'>Python</span>
+            <span style='background: #1f77b4; color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.85rem;'>LangChain</span>
+            <span style='background: #1f77b4; color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.85rem;'>OpenAI</span>
+            <span style='background: #1f77b4; color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.85rem;'>FAISS</span>
+            <span style='background: #1f77b4; color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.85rem;'>Docker</span>
+            <span style='background: #1f77b4; color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.85rem;'>Streamlit</span>
+            <span style='background: #1f77b4; color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.85rem;'>Pydantic</span>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("---")
+
+        # Quick Links
+        st.subheader("🔗 Quick Links")
+
+        link_col1, link_col2 = st.columns(2)
+
+        with link_col1:
+            st.link_button("📂 GitHub", "https://github.com/steph-grigors/ai-job-matcher", use_container_width=True)
+            st.link_button("📚 Docs", "https://github.com/steph-grigors/ai-job-matcher#readme", use_container_width=True)
+
+        with link_col2:
+            st.link_button("💼 Portfolio", "https://www.stephan-gs.work", use_container_width=True)
+            st.link_button("🔗 LinkedIn", "https://linkedin.com/in/stéphan-grs", use_container_width=True)
+
+        st.markdown("---")
+
+        # System Status (Small indicator)
+        st.markdown("""
+        <div style='text-align: center; padding: 1rem; background: #e8f5e9; border-radius: 10px;'>
+            <div style='font-size: 1.5rem;'>✅</div>
+            <div style='font-weight: bold; color: #2e7d32;'>All Systems Operational</div>
+            <div style='font-size: 0.8rem; color: #666;'>Ready to match your next role!</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # ========================================
+    # BOTTOM SECTION - Developer Info
+    # ========================================
+    st.divider()
+
+    st.markdown("""
+    <div style='text-align: center; padding: 2rem 0;'>
+        <h3>👨‍💻 Developed by Stéphan Grigorescu</h3>
+        <p style='color: #666;'>
+            Data Scientist & AI Engineer | Building intelligent solutions with Python & AI
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Social Links (centered)
+    social_col1, social_col2, social_col3, social_col4 = st.columns([1, 1, 1, 1])
+
+    with social_col1:
+        st.link_button("🌐 Portfolio", "https://www.stephan-gs.work", use_container_width=True)
+    with social_col2:
+        st.link_button("💼 LinkedIn", "https://linkedin.com/in/stéphan-grs", use_container_width=True)
+    with social_col3:
+        st.link_button("🐙 GitHub", "https://github.com/steph-grigors", use_container_width=True)
+    with social_col4:
+        st.link_button("📧 Contact", "mailto:stephan.grigorescu@gmail.com", use_container_width=True)
+
+    # Disclaimer (Collapsed)
+    with st.expander("⚖️ Legal Disclaimer"):
+        st.caption("""
+        This application is provided as-is for educational and demonstration purposes.
+        Job listings are sourced from Adzuna and the accuracy of matches depends on
+        the quality of your resume and job descriptions. Always verify job details
+        directly with employers. No warranty is provided for the accuracy of AI-generated
+        match scores or explanations.
+        """)
 
 
 def main():
@@ -117,17 +346,36 @@ def main():
 
     # Sidebar with info
     with st.sidebar:
-        st.header("ℹ️ About")
-        st.write("""
-        This AI-powered system:
-        - 📄 Parses your resume
-        - 🔍 Searches job listings
-        - 🎯 Ranks by match score
-        - 💡 Explains why jobs match
-        """)
+        # 1. API Configuration (NEW - Top priority)
+        st.header("🔑 API Configuration")
+
+        user_key = st.text_input(
+            "OpenAI API Key (Optional)",
+            type="password",
+            value=st.session_state.user_openai_key or "",
+            help="Enter your OpenAI API key for unlimited queries. Leave empty to use demo mode (1 free resume matching per day).",
+            placeholder="sk-proj-..."
+        )
+
+        # Update session state
+        if user_key and user_key != st.session_state.user_openai_key:
+            st.session_state.user_openai_key = user_key
+
+        # Show status
+        status_message = get_query_status_message()
+        if "unlimited" in status_message:
+            st.success(status_message)
+        elif "exhausted" in status_message:
+            st.error(status_message)
+        else:
+            st.info(status_message)
+
+        if not has_user_api_key():
+            st.caption("💡 Get your free API key at [platform.openai.com](https://platform.openai.com/api-keys)")
 
         st.divider()
 
+        # 2. Settings
         st.header("⚙️ Settings")
 
         # Country selector with auto-detection
@@ -159,19 +407,9 @@ def main():
 
         st.divider()
 
-        # API Status
-        st.header("🔑 API Status")
-        api_status = settings.validate_api_keys()
-        for service, status in api_status.items():
-            icon = "✅" if status else "❌"
-            st.write(f"{icon} {service.capitalize()}")
-
-        if not all(api_status.values()):
-            st.error("⚠️ Some API keys are missing!")
-
     # Create custom tab navigation with session state control
-    tab_names = ["📄 Upload Resume", "🔍 Search Jobs", "🏆 View Matches"]
-    tab_keys = ["upload", "search", "matches"]
+    tab_names = ["📄 Upload Resume", "🔍 Search Jobs", "🏆 View Matches", "ℹ️ About"]
+    tab_keys = ["upload", "search", "matches", "about"]
 
     # Map active tab to index
     if st.session_state.active_tab not in tab_keys:
@@ -203,6 +441,8 @@ def main():
         search_jobs_tab()
     elif st.session_state.active_tab == "matches":
         view_matches_tab()
+    elif st.session_state.active_tab == "about":
+        about_tab()
 
 
 def upload_and_parse_tab():
@@ -489,6 +729,19 @@ def search_jobs_tab():
 
     # Search button
     if st.button("🚀 Search & Match Jobs", type="primary"):
+        # Check if user can use the app
+        can_use, reason = can_use_app()
+
+        if not can_use:
+            st.error(f"""
+            ❌ {reason}
+
+            **Options:**
+            1. Enter your OpenAI API key in the sidebar (get one free at platform.openai.com)
+            2. Wait until tomorrow for your free demo query to refresh
+            """)
+            return
+
         # Validation before search
         if not job_query:
             st.error("❌ Please enter a job title or keywords")
@@ -517,6 +770,12 @@ def search_jobs_tab():
         status_text = st.empty()
 
         try:
+            # Use demo query if not using own key
+            if not has_user_api_key():
+                if not use_demo_query(get_client_ip()):
+                    st.error("Failed to use demo query. Please try again or enter your API key.")
+                    return
+
             # Step 1: Fetch jobs
             status_text.text("🔍 Fetching jobs from Adzuna...")
             progress_bar.progress(25)
