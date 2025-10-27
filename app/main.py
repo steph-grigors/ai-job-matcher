@@ -114,17 +114,6 @@ def detect_country_from_location():
 def about_tab():
     """Tab 4: About the application"""
 
-    # Hero Section (Full Width)
-    st.markdown("""
-    <div style='text-align: center; padding: 2rem 0;'>
-        <h1>🎯 AI Job Matcher</h1>
-        <p style='font-size: 1.2rem; color: #666;'>
-            Find your perfect career match with AI-powered intelligence
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-
-    st.divider()
 
     # Two-Column Layout
     left_col, right_col = st.columns([3, 2], gap="large")
@@ -341,8 +330,14 @@ def main():
     """Main application"""
 
     # Header
-    st.markdown('<div class="main-header">🎯 AI Job Matcher</div>', unsafe_allow_html=True)
-    st.markdown('<div class="sub-header">Find your perfect job match with AI-powered recommendations</div>', unsafe_allow_html=True)
+    st.markdown("""
+    <div style='text-align: center; padding: 2rem 0;'>
+        <h1>🎯 AI Job Matcher</h1>
+        <p style='font-size: 1.2rem; color: #666;'>
+            Find your perfect career match with AI-powered intelligence
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
     # Sidebar with info
     with st.sidebar:
