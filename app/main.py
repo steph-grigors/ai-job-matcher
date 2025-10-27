@@ -26,65 +26,65 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for better styling
-st.markdown("""
-<style>
-    .main-header {
-        font-size: 3rem;
-        font-weight: bold;
-        text-align: center;
-        margin-bottom: 2rem;
-        color: #1f77b4;
-    }
-    .sub-header {
-        font-size: 1.5rem;
-        color: #555;
-        text-align: center;
-        margin-bottom: 3rem;
-    }
-    .job-card {
-        background-color: #f8f9fa;
-        padding: 1.5rem;
-        border-radius: 10px;
-        border-left: 5px solid #1f77b4;
-        margin-bottom: 1rem;
-    }
-    .match-score-high {
-        color: #28a745;
-        font-weight: bold;
-        font-size: 1.5rem;
-    }
-    .match-score-medium {
-        color: #ffc107;
-        font-weight: bold;
-        font-size: 1.5rem;
-    }
-    .match-score-low {
-        color: #dc3545;
-        font-weight: bold;
-        font-size: 1.5rem;
-    }
-    .stButton>button {
-        width: 100%;
-    }
-    .job-title {
-        font-size: 1.3rem;
-        font-weight: 600;
-        color: #1f77b4;
-        margin-bottom: 0.5rem;
-    }
-    .rank-badge {
-        display: inline-block;
-        background-color: #e9ecef;
-        padding: 0.2rem 0.6rem;
-        border-radius: 12px;
-        font-size: 0.9rem;
-        font-weight: bold;
-        color: #495057;
-        margin-right: 0.5rem;
-    }
-</style>
-""", unsafe_allow_html=True)
+# # Custom CSS for better styling
+# st.markdown("""
+# <style>
+#     .main-header {
+#         font-size: 3rem;
+#         font-weight: bold;
+#         text-align: center;
+#         margin-bottom: 2rem;
+#         color: #1f77b4;
+#     }
+#     .sub-header {
+#         font-size: 1.5rem;
+#         color: #555;
+#         text-align: center;
+#         margin-bottom: 3rem;
+#     }
+#     .job-card {
+#         background-color: #f8f9fa;
+#         padding: 1.5rem;
+#         border-radius: 10px;
+#         border-left: 5px solid #1f77b4;
+#         margin-bottom: 1rem;
+#     }
+#     .match-score-high {
+#         color: #28a745;
+#         font-weight: bold;
+#         font-size: 1.5rem;
+#     }
+#     .match-score-medium {
+#         color: #ffc107;
+#         font-weight: bold;
+#         font-size: 1.5rem;
+#     }
+#     .match-score-low {
+#         color: #dc3545;
+#         font-weight: bold;
+#         font-size: 1.5rem;
+#     }
+#     .stButton>button {
+#         width: 100%;
+#     }
+#     .job-title {
+#         font-size: 1.3rem;
+#         font-weight: 600;
+#         color: #1f77b4;
+#         margin-bottom: 0.5rem;
+#     }
+#     .rank-badge {
+#         display: inline-block;
+#         background-color: #e9ecef;
+#         padding: 0.2rem 0.6rem;
+#         border-radius: 12px;
+#         font-size: 0.9rem;
+#         font-weight: bold;
+#         color: #495057;
+#         margin-right: 0.5rem;
+#     }
+# </style>
+# """, unsafe_allow_html=True)
 
 
 # Initialize session state
