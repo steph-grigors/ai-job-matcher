@@ -265,21 +265,6 @@ def about_tab():
 
         st.markdown("---")
 
-        # Quick Links
-        st.subheader("🔗 Quick Links")
-
-        link_col1, link_col2 = st.columns(2)
-
-        with link_col1:
-            st.link_button("📂 GitHub", "https://github.com/steph-grigors/ai-job-matcher", use_container_width=True)
-            st.link_button("📚 Docs", "https://github.com/steph-grigors/ai-job-matcher#readme", use_container_width=True)
-
-        with link_col2:
-            st.link_button("💼 Portfolio", "https://www.stephan-gs.work", use_container_width=True)
-            st.link_button("🔗 LinkedIn", "https://linkedin.com/in/stéphan-grs", use_container_width=True)
-
-        st.markdown("---")
-
         # System Status (Small indicator)
         st.markdown("""
         <div style='text-align: center; padding: 1rem; background: #e8f5e9; border-radius: 10px;'>
