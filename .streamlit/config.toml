@@ -1,18 +1,18 @@
 [theme]
-# Use Streamlit's dark theme
-base = "dark"
+# Use Streamlit's light theme
+base = "light"
 
 # Primary accent color for interactive elements
 primaryColor = "#1f77b4"
 
 # Background color for the main content area
-backgroundColor = "#0e1117"
+backgroundColor = "#FFFFFF"
 
 # Background color used for the sidebar and most interactive widgets
-secondaryBackgroundColor = "#262730"
+secondaryBackgroundColor = "#f0f2f6"
 
 # Color used for almost all text
-textColor = "#fafafa"
+textColor = "#262730"
 
 # Font family for all text in the app, except code blocks
 font = "sans serif"

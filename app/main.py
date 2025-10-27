@@ -22,7 +22,7 @@ from app.ip_tracker import get_query_status_message, can_use_app, use_demo_query
 st.set_page_config(
     page_title="AI Job Matcher",
     page_icon="🎯",
-    layout="wide",
+    layout="centered",
     initial_sidebar_state="expanded"
 )
 
